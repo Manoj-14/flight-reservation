@@ -14,7 +14,7 @@ const defaultList = [
 module.exports = {
   userReg: async (req, res) => {
     const { id, password, name } = {
-      id: "Manu",
+      id: "Manoj",
       password: "admin",
       name: "Manoj",
     };
@@ -29,9 +29,10 @@ module.exports = {
     } catch (error) {
       fs.writeFileSync("./files/userInfo.txt", JSON.stringify(defaultList));
       data = JSON.stringify(defaultList);
+      console.log(error);
     }
     data = JSON.parse(data);
-    console.log(data);
+    console.log(data.length);
 
     console.log(id, password, name);
     let i;
@@ -56,12 +57,53 @@ module.exports = {
           id,
           password: hashedPassword,
         });
-      return;
     } catch (error) {
       console.log(error);
       res.status(401).json({ message: "NOT WORKING FINE" });
       return;
     }
-    // res.send("Registered");
+  },
+
+  userLogin: async (req, res) => {
+    try {
+      const { id, password, name } = {
+        id: "Manoj",
+        password: "admin",
+        name: "Manoj",
+      };
+
+      let data = getDataFromFile("./files/userInfo.txt", defaultList);
+      data = JSON.parse(data);
+      let flag = false;
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].id === id) {
+          flag = true;
+          let matchPass = await bcrypt.compareSync(password, data[i].password);
+          if (matchPass) {
+            res
+              .setHeader("Set-Cookie", [
+                "token=encryptedstring; HttpOnly",
+                `userName=${data[i].id}`,
+              ])
+              .json({ message: "Logged in", userName: id });
+            return;
+          } else {
+            res
+              .setHeader("Set-Cookie", ["token=; HttpOnly", "userName="])
+              .json({ message: "Wrong Password" });
+            return;
+          }
+        }
+
+        // console.log(flag);
+      }
+      res
+        .setHeader("Set-Cookie", ["token=; HttpOnly", "userName="])
+        .json({ message: "No such User Found" });
+      return;
+    } catch (error) {
+      res.status(401).json({ message: "Error" });
+      console.log(error);
+    }
   },
 };

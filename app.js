@@ -29,13 +29,14 @@ app.use(express.static(path.join(__dirname + "/public")));
 app.use(express.static("images"));
 app.use(cookieParser());
 
-const { userReg } = require("./routes/users");
+const { userReg, userLogin } = require("./routes/users");
 
 app.get("/", (req, res, next) => {
   res.render("index.ejs", { title: "Airline reservation" });
 });
 
 app.all("/register", userReg);
+app.all("/login", userLogin);
 
 app.listen(port, () => {
   console.log("Listening to port", port);
