@@ -1,1 +1,1 @@
-[{"id":"admin","name":"admin","password":"admin"},{"id":"Manu","password":"$2a$10$nPX0hCs/s/VyLUoI0JGRqOSPmYFNq2eDLHIWWcfdZ2LB5uzAGwV.u","name":"Manoj"},{"id":"Manoj","password":"$2a$10$o./rNk4NPZCPZZRY603sRODoz3Qw3VWhupJEzyMMt9BC9fn4cksqu","name":"Manoj"}]
+[{"id":"manu","password":"$2a$10$XhfswCY0ihohD1m7.ZPDQevonCL3VJ7PTq6SXC2rZd0CWSGeaoO3y","name":"Manoj","accessCode":0},{"id":"admin@gmail.com","password":"$2a$10$nf5dDPbh1285ctiFQeVANu.ZQTAAV1B.TGT2Hql9ap699lc8nP9VO","name":"Admin","accessCode":1}]

@@ -1,0 +1,39 @@
+<%- include ('./partials/headers.ejs') %>
+
+
+    <body>
+        <%- include ('./partials/navbar.ejs') %>
+
+            <div class="login-form">
+                <h2>Register</h2>
+                <form action="/regUser" method="post" autocomplete="off">
+                    <div class="group">
+                        <input type="text" name="name" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Name</label>
+                    </div>
+                    <div class="group">
+                        <input type="text" name="id" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Email</label>
+                    </div>
+
+                    <div class="group">
+                        <input type="password" name="password" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Password</label>
+                    </div>
+
+                    <div class="group">
+                        <input type="submit" value="Login">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <!-- <label>Email</label> -->
+                    </div>
+
+                </form>
+            </div>
+    </body>

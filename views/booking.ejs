@@ -1,0 +1,23 @@
+<%- include ('./partials/headers.ejs') %>
+
+    <body>
+        <!-- include dashboardNav.ejs-->
+        <%- include ('./partials/dashboardNav.ejs') %>
+            <main>
+                <% if (length>0) { %>
+                    <% flights.forEach(element=> { %>
+                        <h6>
+                            <%= element.flightNumber %>
+                        </h6>
+                        <% }) %>
+                            <% } %>
+                                <% for( let index=0; index < flights.length; index++ ) { %>
+                                    <div class="flight">
+                                        <h3>
+                                            <%= flights[index].flightNumber %> ---> <%= flightNameArr %>
+                                        </h3>
+                                    </div>
+                                    <% } %>
+
+            </main>
+    </body>

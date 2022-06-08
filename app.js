@@ -29,14 +29,47 @@ app.use(express.static(path.join(__dirname + "/public")));
 app.use(express.static("images"));
 app.use(cookieParser());
 
-const { userReg, userLogin } = require("./routes/users");
+const { userReg, userLogin, fetchFlights } = require("./routes/users");
+const { userDash, adminDash } = require("./routes/dashboard");
 
 app.get("/", (req, res, next) => {
-  res.render("index.ejs", { title: "Airline reservation" });
+  res.render("index.ejs", {
+    title: "Airline reservation",
+    main: true,
+    adminDash: false,
+    userDash: false,
+  });
 });
 
-app.all("/register", userReg);
-app.all("/login", userLogin);
+app.all("/register", (req, res) => {
+  res.render("register.ejs", {
+    title: "Register",
+    main: true,
+    adminDash: false,
+    userDash: false,
+  });
+});
+
+app.all("/login", (req, res) => {
+  res.render("login.ejs", {
+    title: "Login",
+    main: true,
+    adminDash: false,
+    userDash: false,
+  });
+});
+
+app.all("/logout", (req, res) => {
+  req.session.destroy();
+  res.redirect("/login");
+});
+
+app.all("/userdashboard", userDash);
+app.all("/admindashboard", adminDash);
+
+app.all("/loginAuth", userLogin);
+app.all("/regUser", userReg);
+app.all("/fetchFlights", fetchFlights);
 
 app.listen(port, () => {
   console.log("Listening to port", port);

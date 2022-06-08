@@ -1,0 +1,61 @@
+<%- include ('./partials/headers.ejs') %>
+
+    <body>
+        <%- include ('./partials/dashboardNav.ejs') %>
+            <header class="booking-form-header">
+                <div id="greeting">
+                    <h2>Hii <%= name %>
+                    </h2>
+                </div>
+                <div>
+                    <form action="/fetchFlights" class="booking-form" method="POST" autocomplete="off">
+                        <div>
+                            <div class="group">
+                                <input type="text" name="from" list="flight-code" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>FROM</label>
+                                <datalist id="flight-code">
+                                    <option value="AMD">AMD</option>
+                                    <option value="BLR">BLR</option>
+                                    <option value="CCU">CCU</option>
+                                    <option value="MAA">MAA</option>
+                                    <option value="DEL">DEL</option>
+                                    <option value="HYD">HYD</option>
+                                    <option value="BOM">BOM</option>
+                                    <option value="PUT">PUT</option>
+                                    <option value="VNS">VNS</option>
+                                </datalist>
+                            </div>
+                            <div class="group">
+                                <input type="text" list="flight-code" name="to" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>TO</label>
+                                <datalist id="flight-code">
+                                    <option value="AMD">AMD</option>
+                                    <option value="BLR">BLR</option>
+                                    <option value="CCU">CCU</option>
+                                    <option value="MAA">MAA</option>
+                                    <option value="DEL">DEL</option>
+                                    <option value="HYD">HYD</option>
+                                    <option value="BOM">BOM</option>
+                                    <option value="PUT">PUT</option>
+                                    <option value="VNS">VNS</option>
+                                </datalist>
+                            </div>
+                            <div class="group">
+                                <input type="DATE" name="date" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>DATE</label>
+                            </div>
+                            <div class="group">
+                                <input type="submit" value="Get flights" required>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </header>
+    </body>

@@ -1,17 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>
-            <%= title %>
-        </title>
-    </head>
+<%- include ('./partials/headers.ejs') %>
 
     <body>
-        <h1>Hello World</h1>
+        <%- include ('./partials/navbar.ejs') %>
+            <header>
+                <div class="hero">
+                    <video src="flight landing.mp4" muted autoplay loop></video>
+                    <div id="video-overlay">Hiii</div>
+                    <div class="headings">
+                        <h1 id="title">Flight Reservation Platform</h1>
+                        <a href="#">Book seats</a>
+                    </div>
+                </div>
+            </header>
     </body>
-
-</html>

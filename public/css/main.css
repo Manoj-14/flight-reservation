@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("css-var.css");
+
+* {
+  margin: 0px;
+  padding: 0px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--body-color);
+  transition: var(--tran-05);
+}
+
+header .hero video {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  -o-object-fit: cover;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+header .hero #video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #000000;
+  opacity: 0.4;
+}
+
+header .hero .headings {
+  position: absolute;
+  top: 50%;
+  left: 5rem;
+}
+
+/* dashboard  */
+.booking-form-header {
+  height: 100vh;
+}
+.booking-form-header > div:last-child {
+  height: 100%;
+}
+.booking-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#greeting {
+  left: 10rem;
+  top: 3rem;
+  position: absolute;
+  font-size: 1.3rem;
+}
