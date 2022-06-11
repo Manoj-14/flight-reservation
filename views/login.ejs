@@ -6,28 +6,34 @@
 
             <div class="login-form">
                 <h2>Login</h2>
-                <form action="/loginAuth" method="post">
+                <% if (msg) { %>
+                    <span class="<%=status%> ">
+                        <%= message %>
+                    </span>
+                    <% } %>
 
-                    <div class="group">
-                        <input type="text" name="id" required>
-                        <span class="highlight"></span>
-                        <span class="bar"></span>
-                        <label>Email</label>
-                    </div>
+                        <form action="/loginAuth" method="post">
 
-                    <div class="group">
-                        <input type="password" name="password" required>
-                        <span class="highlight"></span>
-                        <span class="bar"></span>
-                        <label>Password</label>
-                    </div>
-                    <div class="group">
-                        <input type="submit" value="Login">
-                        <span class="highlight"></span>
-                        <span class="bar"></span>
-                        <!-- <label>Email</label> -->
-                    </div>
+                            <div class="group">
+                                <input type="text" name="id" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Email</label>
+                            </div>
 
-                </form>
+                            <div class="group">
+                                <input type="password" name="password" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Password</label>
+                            </div>
+                            <div class="group">
+                                <input type="submit" value="Login">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <!-- <label>Email</label> -->
+                            </div>
+
+                        </form>
             </div>
     </body>

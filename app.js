@@ -30,7 +30,12 @@ app.use(express.static("images"));
 app.use(cookieParser());
 
 const { userReg, userLogin, fetchFlights } = require("./routes/users");
-const { userDash, adminDash } = require("./routes/dashboard");
+const {
+  userDash,
+  adminDash,
+  userproj,
+  uptPass,
+} = require("./routes/dashboard");
 
 app.get("/", (req, res, next) => {
   res.render("index.ejs", {
@@ -56,6 +61,7 @@ app.all("/login", (req, res) => {
     main: true,
     adminDash: false,
     userDash: false,
+    msg: false,
   });
 });
 
@@ -70,6 +76,8 @@ app.all("/admindashboard", adminDash);
 app.all("/loginAuth", userLogin);
 app.all("/regUser", userReg);
 app.all("/fetchFlights", fetchFlights);
+app.all("/userprofile", userproj);
+app.all("/upt-pass", uptPass);
 
 app.listen(port, () => {
   console.log("Listening to port", port);

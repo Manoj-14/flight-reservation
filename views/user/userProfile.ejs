@@ -1,0 +1,53 @@
+<%- include ('../partials/headers.ejs') %>
+
+    <body>
+        <%- include ('../partials/dashboardNav.ejs') %>
+            <main>
+                <section class="usr-prof-main">
+                    <div>
+                        <div class="prof-pic">
+                            <img id="prof-pic" src="account.png" alt="profile-pic">
+                        </div>
+                        <div class="prof-det">
+                            <h3>Name : <span>
+                                    <%= name %>
+                                </span></h3>
+                            <h3>Email : <span>
+                                    <%= user %>
+                                </span></h3>
+                            <h3>Phone : <span>
+                                    <%= phone %>
+                                </span></h3>
+                            <div class="group">
+                                <input type="button" onclick="popupDisplay('updt-sec')" value="Change Password"
+                                    required>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="updt-sec">
+                    <div>
+                        <span><i onclick="popupClose('updt-sec')" class='bx bx-x'></i></span>
+
+                        <form action="/upt-pass" method="post">
+                            <div class="group">
+                                <input type="password" name="oldPassword" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Old Password</label>
+                            </div>
+                            <div class="group">
+                                <input type="password" name="newPassword" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>New Password</label>
+                            </div>
+                            <div class="group">
+                                <input type="submit" value="Change Password" required>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </main>
+            <script src="js/index.js"></script>
+    </body>

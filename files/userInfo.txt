@@ -1,1 +1,1 @@
-[{"id":"manu","password":"$2a$10$XhfswCY0ihohD1m7.ZPDQevonCL3VJ7PTq6SXC2rZd0CWSGeaoO3y","name":"Manoj","accessCode":0},{"id":"admin@gmail.com","password":"$2a$10$nf5dDPbh1285ctiFQeVANu.ZQTAAV1B.TGT2Hql9ap699lc8nP9VO","name":"Admin","accessCode":1}]
+[{"id":"admin","name":"admin","password":"admin","Phone":"1234567890","accessCode":1},{"id":"manoj@gmail.com","password":"$2a$10$uDDFZ0qhL30As1LLXw5EeOgjeY2ntrDl.YxXhT3/KmJ.Uw4DhlMIu","name":"Manoj","phone":"9741626527","accessCode":0}]

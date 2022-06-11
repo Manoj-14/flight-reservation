@@ -11,6 +11,7 @@ const defaultList = [
     id: "admin",
     name: "admin",
     password: "admin",
+    Phone: "1234567890",
     accessCode: 1,
   },
 ];
@@ -19,6 +20,7 @@ module.exports = {
     const id = req.body.id;
     const name = req.body.name;
     const password = req.body.password;
+    const phone = req.body.phone;
     const accessCode = 0;
     // const { name, id, password ,accessCode} = {};
     // console.log(name, id, password);
@@ -48,19 +50,17 @@ module.exports = {
 
     try {
       const hashedPassword = await bcrypt.hashSync(password, salt);
-      data.push({ id, password: hashedPassword, name, accessCode });
+      data.push({ id, password: hashedPassword, name, phone, accessCode });
       fs.writeFileSync("./files/userInfo.txt", JSON.stringify(data));
-      res
-        .setHeader("Set-Cookie", [
-          "token=encryptedstring; HttpOnly",
-          `userName=${data[i].id}`,
-        ])
-        .json({
-          message: "Signed up Succesfully",
-          id,
-          password: hashedPassword,
-          accessCode: 0,
-        });
+      res.render("login.ejs", {
+        title: "Login",
+        main: true,
+        adminDash: false,
+        userDash: false,
+        msg: true,
+        status: "success",
+        message: "You had registered please login",
+      });
     } catch (error) {
       console.log(error);
       res.status(401).json({ message: "NOT WORKING FINE" });
@@ -137,8 +137,9 @@ module.exports = {
       if (error) throw new Error(error);
       data = JSON.parse(response.body);
       var flightName;
-      var flightNameArr = [];
-      for (let i = 0; i < data.scheduledFlights.length; i++) {
+      var flightNameArr = [],
+        flightNameRef = [];
+      for (var i = 0; i < data.scheduledFlights.length; i++) {
         var options = {
           method: "GET",
           url: `https://api.flightstats.com/flex/airlines/rest/v1/json/fs/${data.scheduledFlights[i].carrierFsCode}?appId=76e0bd85`,
@@ -150,14 +151,16 @@ module.exports = {
         request(options, function (error, response) {
           if (error) throw new Error(error);
           flightName = JSON.parse(response.body);
-          flightNameArr.push(flightName.airline.name);
+          // console.log(flightName.airline.name);
+          flightNameRef.push(flightName.airline.name);
+          flightNameArr.push(flightNameRef.slice(0));
         });
       }
-      console.log(flightNameArr);
+      console.log(flightNameRef);
       const length = data.scheduledFlights.length;
       var flights = [];
       flights = data.scheduledFlights;
-      res.status(200).render("booking.ejs", {
+      res.status(200).render("user/booking.ejs", {
         title: "Booking",
         length: length,
         flights,

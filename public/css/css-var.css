@@ -5,6 +5,7 @@
   --primary-color-light: #f6f5ff;
   --toggle-color: #ddd;
   --text-color: #707070;
+  --popup-color: #70707095;
 
   /* ====== Transition ====== */
   --tran-03: all 0.2s ease;
