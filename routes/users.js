@@ -5,7 +5,12 @@ const bcrypt = require("bcryptjs");
 const getDataFromFile = require("../getDataFromFile");
 var request = require("request");
 var salt = bcrypt.genSaltSync(10);
+const https = require("https");
 var session;
+addToArray = (intoArr, addElem) => {
+  intoArr.push(addElem);
+  return intoArr;
+};
 const defaultList = [
   {
     id: "admin",
@@ -39,7 +44,6 @@ module.exports = {
     data = JSON.parse(data);
     console.log(data);
 
-    // console.log(id, password, name);
     let i;
     for (i = 0; i < data.length; i++) {
       if (data[i].id === id) {
@@ -111,65 +115,72 @@ module.exports = {
   },
   fetchFlights: (req, res) => {
     var session = req.session;
-    // console.log(req.body);
-    const from = req.body.from;
-    const to = req.body.to;
-    // date = req.body.date;
-    var date = new Date(req.body.date);
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    date = year + "/" + month + "/" + day;
-    console.log(date);
-    const felDetUrl = `https://api.flightstats.com/flex/schedules/rest/v1/json/from/${from}/to/${to}/arriving/${date}?appId=76e0bd85&appKey=2008cfc23be0eb1d16514863fa356a02&Access-Control-Allow-Origin=*`;
-    // console.log(url);
-    // res.send("hello");
-    var FligOptions = {
-      method: "GET",
-      url: felDetUrl,
-      headers: {
-        appId: "76e0bd85",
-        appKey: "2008cfc23be0eb1d16514863fa356a02",
-      },
-    };
+    if (session.user) {
+      const { from, to, date } = req.body;
 
-    request(FligOptions, function (error, response) {
-      if (error) throw new Error(error);
-      data = JSON.parse(response.body);
-      var flightName;
-      var flightNameArr = [],
-        flightNameRef = [];
-      for (var i = 0; i < data.scheduledFlights.length; i++) {
-        var options = {
+      if (from && date && to) {
+        var mydate = new Date(date);
+        const day = mydate.getDate();
+        const month = mydate.getMonth() + 1;
+        const year = mydate.getFullYear();
+        mydate = year + "/" + month + "/" + day;
+        const felDetUrl = `https://api.flightstats.com/flex/schedules/rest/v1/json/from/${from}/to/${to}/arriving/${mydate}?appId=76e0bd85&appKey=2008cfc23be0eb1d16514863fa356a02&Access-Control-Allow-Origin=*`;
+        var FligOptions = {
           method: "GET",
-          url: `https://api.flightstats.com/flex/airlines/rest/v1/json/fs/${data.scheduledFlights[i].carrierFsCode}?appId=76e0bd85`,
+          url: felDetUrl,
           headers: {
             appId: "76e0bd85",
             appKey: "2008cfc23be0eb1d16514863fa356a02",
           },
         };
-        request(options, function (error, response) {
+
+        request(FligOptions, function (error, response) {
           if (error) throw new Error(error);
-          flightName = JSON.parse(response.body);
-          // console.log(flightName.airline.name);
-          flightNameRef.push(flightName.airline.name);
-          flightNameArr.push(flightNameRef.slice(0));
+          data = JSON.parse(response.body);
+          var flightName;
+          var flightNameArr = [];
+          for (var i = 0; i < data.scheduledFlights.length; i++) {
+            var options = {
+              method: "GET",
+              url: `https://api.flightstats.com/flex/airlines/rest/v1/json/fs/${data.scheduledFlights[i].carrierFsCode}?appId=76e0bd85&appKey=2008cfc23be0eb1d16514863fa356a02`,
+              headers: {
+                appId: "76e0bd85",
+                appKey: "2008cfc23be0eb1d16514863fa356a02",
+              },
+            };
+            // request(options, function (error, flgResponse) {
+            //   if (error) throw new Error(error);
+            //   flightName = JSON.parse(flgResponse.body);
+            //   flightNameArr.push(flightName.airline.name);
+            // });
+            https.get(options.url, function (fligRes) {
+              fligRes.on("data", function (chunk) {
+                flightName = JSON.parse(chunk);
+                flightNameArr.push(flightName);
+              });
+            });
+            console.log(flightNameArr);
+          }
+          console.log(flightNameArr);
+          const length = data.scheduledFlights.length;
+          var flights = [];
+          flights = data.scheduledFlights;
+          res.status(200).render("user/booking.ejs", {
+            title: "Booking",
+            length: length,
+            flights,
+            flightNameArr,
+            main: false,
+            adminDash: false,
+            userDash: true,
+            name: session.user,
+          });
         });
+      } else {
+        res.status(401).redirect("/userdashboard");
       }
-      console.log(flightNameRef);
-      const length = data.scheduledFlights.length;
-      var flights = [];
-      flights = data.scheduledFlights;
-      res.status(200).render("user/booking.ejs", {
-        title: "Booking",
-        length: length,
-        flights,
-        flightNameArr,
-        main: false,
-        adminDash: false,
-        userDash: true,
-        name: session.user,
-      });
-    });
+    } else {
+      res.status(401).redirect("/login");
+    }
   },
 };

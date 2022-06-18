@@ -63,6 +63,10 @@ header .hero .headings {
   font-size: 1.3rem;
 }
 
+.correct-margin {
+  padding-left: 6rem;
+}
+
 /* User Profile */
 
 .usr-prof-main {
@@ -113,4 +117,78 @@ header .hero .headings {
   color: red;
   font-size: 2rem;
   cursor: pointer;
+}
+
+/* Booking */
+
+.flight {
+  background-color: var(--primary-color-light);
+  margin: 20px 1rem;
+  padding: 20px 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flight .flight-name {
+  color: var(--primary-color);
+}
+.flight .flight-info {
+  padding-top: 10px;
+}
+.flight .flight-info span {
+  color: var(--text-color);
+  margin: 0 5px;
+}
+.booking-options {
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+.ops-btns {
+  display: inline-block;
+  padding: 0px;
+  margin: 0px;
+}
+.booking-options input {
+  margin: 5px !important;
+  padding: 5px;
+}
+
+.bookin-sec > div {
+  width: 60% !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.second-inps {
+  transform: translateX(200%);
+  display: none;
+}
+.third-inps {
+  transform: translateX(200%);
+  display: none;
+}
+.fourth-inps {
+  transform: translateX(200%);
+  display: none;
+}
+
+.fourth-inps > div {
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.fourth-inps > div > .numpas,
+.confirm-btns {
+  display: flex;
+  gap: 2rem;
+}
+.confirm-btns input {
+  width: 200px !important;
+  padding: 5px 10px;
 }

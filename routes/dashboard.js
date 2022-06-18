@@ -3,6 +3,15 @@ const path = require("path");
 const getDataFromFile = require("../getDataFromFile");
 const bcrypt = require("bcryptjs");
 var salt = bcrypt.genSaltSync(10);
+function create_UUID() {
+  var dt = new Date().getTime();
+  var uuid = "xxx-xxy-xyx-yxx".replace(/[xy]/g, function (c) {
+    var r = (dt + Math.random() * 16) % 16 | 0;
+    dt = Math.floor(dt / 16);
+    return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
+  });
+  return uuid;
+}
 const defaultList = [
   {
     id: "admin",
@@ -103,6 +112,98 @@ module.exports = {
         }
       }
       res.status(404).send("User not found");
+    } else {
+      res.redirect("/logout");
+    }
+  },
+  flightBooked: (req, res) => {
+    console.log(req.body);
+    res.send(req.body);
+  },
+  paidConfirm: (req, res) => {
+    var session = req.session;
+    let data = new String();
+    // const numOfSeates = req.body.numOfSeates;
+
+    if (session.user) {
+      const { numOfSeats, name, flightName, flightCode, arrTime, deptTime } =
+        req.body;
+      var ticketnum;
+
+      try {
+        data = fs.readFileSync("./files/booked.txt", {
+          encoding: "utf8",
+          flag: "r",
+        });
+      } catch (error) {
+        fs.writeFileSync("./files/booked.txt", JSON.stringify([]));
+        data = JSON.stringify([]);
+        console.log(error);
+      }
+      data = JSON.parse(data);
+
+      try {
+        data.push({
+          ticketnum: create_UUID(),
+          user: session.user,
+          numOfSeats,
+          name,
+          flightName,
+          flightCode,
+          arrTime,
+          deptTime,
+          paymentSts: "Paid",
+          cancelation: 0,
+        });
+        fs.writeFileSync("./files/booked.txt", JSON.stringify(data));
+        res.send("Paid Thank you");
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      res.redirect("/logout");
+    }
+  },
+  saveBooking: (req, res) => {
+    var session = req.session;
+    let data = new String();
+    // const numOfSeates = req.body.numOfSeates;
+
+    if (session.user) {
+      const { numOfSeats, name, flightName, flightCode, arrTime, deptTime } =
+        req.body;
+      var ticketnum;
+
+      try {
+        data = fs.readFileSync("./files/bookingSaved.txt", {
+          encoding: "utf8",
+          flag: "r",
+        });
+      } catch (error) {
+        fs.writeFileSync("./files/bookingSaved.txt", JSON.stringify([]));
+        data = JSON.stringify([]);
+        console.log(error);
+      }
+      data = JSON.parse(data);
+
+      try {
+        data.push({
+          ticketnum: create_UUID(),
+          user: session.user,
+          numOfSeats,
+          name,
+          flightName,
+          flightCode,
+          arrTime,
+          deptTime,
+          paymentSts: "Saved",
+          delete: 0,
+        });
+        fs.writeFileSync("./files/bookingSaved.txt", JSON.stringify(data));
+        res.send("Saved Thank you");
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       res.redirect("/logout");
     }

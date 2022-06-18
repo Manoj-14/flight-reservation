@@ -141,3 +141,35 @@ input[type="date"]:required:invalid::-webkit-datetime-edit {
 input[type="date"]:focus::-webkit-datetime-edit {
   color: black !important;
 }
+
+::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: rgba(153, 153, 153, 0) !important;
+}
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+
+  color: rgba(153, 153, 153, 0) !important;
+}
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+
+  color: rgba(153, 153, 153, 0) !important;
+}
+:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: rgba(153, 153, 153, 0) !important;
+}
+
+.flight-details > input {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  display: inline !important;
+  width: 150px !important;
+}
+
+.flight-details {
+  display: flex;
+}

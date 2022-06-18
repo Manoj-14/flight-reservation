@@ -35,6 +35,9 @@ const {
   adminDash,
   userproj,
   uptPass,
+  flightBooked,
+  paidConfirm,
+  saveBooking,
 } = require("./routes/dashboard");
 
 app.get("/", (req, res, next) => {
@@ -78,6 +81,9 @@ app.all("/regUser", userReg);
 app.all("/fetchFlights", fetchFlights);
 app.all("/userprofile", userproj);
 app.all("/upt-pass", uptPass);
+app.all("/booked", flightBooked);
+app.all("/paid", paidConfirm);
+app.all("/saved", saveBooking);
 
 app.listen(port, () => {
   console.log("Listening to port", port);
