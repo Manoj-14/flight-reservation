@@ -1,23 +1,140 @@
 <%- include ('../partials/headers.ejs') %>
+    <script>
+
+        function getTime(time, className) {
+            var time = time.slice(11, 17);
+            const element = document.querySelector("." + className);
+            element.innerHTML = time;
+        }
+    </script>
 
     <body>
-        <!-- include dashboardNav.ejs-->
         <%- include ('../partials/dashboardNav.ejs') %>
-            <main>
-                <% if (length>0) { %>
-                    <% flights.forEach(element=> { %>
-                        <h6>
-                            <%= element.flightNumber %>
-                        </h6>
-                        <% }) %>
-                            <% } %>
-                                <% for( let index=0; index < flights.length; index++ ) { %>
+            <% function getTime (stringTime){ var time=stringTime.slice(11, 16); return time; } %>
+                <main class="correct-margin">
+                    <div class="container">
+                        <div id="flight-filter">
+                            <h2>From : <span>BLR</span> </h2>
+                            <h2>To : <span>CCL</span></h2>
+                            <h2>Date : <span>Date</span></h2>
+                        </div>
+                        <div class="flights-details">
+                            <% if (length> 0) { %>
+                                <% for( let index=0; index < length; index++ ) { %>
                                     <div class="flight">
-                                        <h3>
-                                            <%= flights[index].flightNumber %> ---> <%= flightNameArr %>
-                                        </h3>
+                                        <div>
+                                            <h2 class="flight-name"><span class="index">
+                                                    <%= index+1 %>.
+                                                </span>Flight name</h2>
+                                            <div class="flight-info">
+                                                <span class="code">
+                                                    <%= flights[index].flightNumber %>
+                                                </span>
+                                                <span class="dept-time">
+                                                    <%= getTime(flights[index].departureTime) %>
+                                                </span>
+
+                                                <span class="arr-time">
+                                                    <%= getTime(flights[index].arrivalTime) %>
+                                                </span>
+                                                <!-- <span class="dur-time">flights[index].Duration</span> -->
+                                            </div>
+                                        </div>
+                                        <div class="booking-options">
+                                            <input type="button"
+                                                onclick="popupDisplay('updt-sec');getFlightDets('name', '<%= flights[index].flightNumber %>', '<%= getTime(flights[index].departureTime) %>', '<%= getTime(flights[index].arrivalTime) %>')"
+                                                id="eco-btn" value="Economy : 1999.00/-" required>
+                                            <input type="button"
+                                                onclick="popupDisplay('updt-sec');getFlightDets('name', '<%= flights[index].flightNumber %>', '<%= getTime(flights[index].departureTime) %>', '<%= getTime(flights[index].arrivalTime) %>')"
+                                                id="busi-btn" value="Business : 2999.00/-" required>
+                                        </div>
                                     </div>
                                     <% } %>
 
-            </main>
+                                        <% } %>
+
+                        </div>
+                    </div>
+                    <section class="updt-sec bookin-sec">
+                        <div>
+                            <span><i onclick="popupClose('updt-sec')" class='bx bx-x'></i></span>
+
+                            <form action="/booked" method="post">
+                                <div class="first-inps">
+                                    <div class="group">
+                                        <input type="number" class="inc" max="5" min="1" name="numOfSeats" value="1"
+                                            required>
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                        <label>No of Passengers</label>
+                                    </div>
+
+                                    <div class="group">
+                                        <input type="button"
+                                            onclick="swipeLeft('first-inps','second-inps'); createInps('second-inps', 'inc  ')"
+                                            value="Next" required>
+                                    </div>
+                                </div>
+                                <div class="second-inps">
+                                    <h3>Enter the Passenger Details</h3>
+                                </div>
+                                <div class="third-inps">
+                                    <div class="group">
+                                        <input type="number" class="inc" max="5" min="1" name="numOfSeats2" value="1"
+                                            required>
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                        <label>No of Passengers 2</label>
+                                    </div>
+
+                                    <div class="group">
+                                        <input type="button" onclick="swipeLeft('third-inps','fourth-inps');"
+                                            value="Submit">
+                                    </div>
+                                </div>
+                                <div class="fourth-inps">
+                                    <div>
+                                        <h2>Confirm Details</h2>
+                                        <div class="flight-details">
+                                            <input type="text" name="flightName" id="flightName" readonly
+                                                value="Flight name">
+                                            <input type="text" name="flightCode" id="flightCode" readonly value="code">
+                                            <input type="text" name="arrTime" id="arrTime" readonly value="arr_time">
+                                            <input type="text" name="deptTime" id="deptTime" readonly
+                                                value="depar_time">
+                                        </div>
+                                        <div class="numpas">
+                                            <div class="passenger-dets">
+                                                <h3>Passengers</h3>
+                                                Name <input type="text" readonly value="Manoj">
+                                                Name <input type="text" readonly value="Manoj">
+                                                Name <input type="text" readonly value="Manoj">
+                                            </div>
+                                            <div class="payment">
+                                                <div>
+                                                    <h3>Passengers</h3>
+                                                    Number of Passengers:<input type="number" value="3" readonly>
+                                                </div>
+                                                <div>
+                                                    <h3>Payment Details</h3>
+                                                    Total payment:<input type="number" value="3000" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="confirm-btns">
+                                            <input type="submit" formaction="/paid" value="Confirm And Pay">
+                                            <input type="submit" formaction="/saved" value="Confirm And Save">
+                                            <input type="button" onclick="location.reload();" value="Reset"
+                                                class="reset">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </form>
+                        </div>
+                    </section>
+
+                </main>
+                <script src="js/index.js"></script>
     </body>
