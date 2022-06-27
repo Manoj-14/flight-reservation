@@ -156,7 +156,7 @@ module.exports = {
           cancelation: 0,
         });
         fs.writeFileSync("./files/booked.txt", JSON.stringify(data));
-        res.send("Paid Thank you");
+        res.redirect("/userhistory");
       } catch (error) {
         console.log(error);
       }
@@ -200,7 +200,7 @@ module.exports = {
           delete: 0,
         });
         fs.writeFileSync("./files/bookingSaved.txt", JSON.stringify(data));
-        res.send("Saved Thank you");
+        res.redirect("/usrbooking");
       } catch (error) {
         console.log(error);
       }
