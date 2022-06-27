@@ -39,6 +39,10 @@ const {
   paidConfirm,
   saveBooking,
   userHistory,
+  canceltrip,
+  savedHistory,
+  paySaved,
+  rmSaved,
 } = require("./routes/dashboard");
 
 app.get("/", (req, res, next) => {
@@ -86,6 +90,10 @@ app.all("/booked", flightBooked);
 app.all("/paid", paidConfirm);
 app.all("/saved", saveBooking);
 app.all("/userhistory", userHistory);
+app.all("/cancel", canceltrip);
+app.all("/usrbooking", savedHistory);
+app.all("/paySaved", paySaved);
+app.all("/rmSaved", rmSaved);
 
 app.listen(port, () => {
   console.log("Listening to port", port);

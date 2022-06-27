@@ -208,6 +208,39 @@ module.exports = {
       res.redirect("/logout");
     }
   },
+  savedHistory: (req, res) => {
+    var session = req.session;
+    var history = [];
+    if (session.user) {
+      try {
+        data = fs.readFileSync("./files/bookingSaved.txt", {
+          encoding: "utf8",
+          flag: "r",
+        });
+      } catch (error) {
+        fs.writeFileSync("./files/bookingSaved.txt", JSON.stringify([]));
+        data = JSON.stringify([]);
+        console.log(error);
+      }
+      data = JSON.parse(data);
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].user === session.user && data[i].delete === 0) {
+          history.push(data[i]);
+        }
+      }
+      res.status(200).render("user/booking-saved.ejs", {
+        title: "Saved Bookings",
+        length: history.length,
+        history,
+        main: false,
+        adminDash: false,
+        userDash: true,
+        name: session.user,
+      });
+    } else {
+      res.redirect("/logout");
+    }
+  },
   userHistory: (req, res) => {
     var session = req.session;
     var history = [];
@@ -224,12 +257,10 @@ module.exports = {
       }
       data = JSON.parse(data);
       for (let i = 0; i < data.length; i++) {
-        if (data[i].user === session.user) {
+        if (data[i].user === session.user && data[i].cancelation === 0) {
           history.push(data[i]);
         }
       }
-      console.log(data);
-      console.log(history.length);
       res.status(200).render("user/booking-history.ejs", {
         title: "User History",
         length: history.length,
@@ -241,6 +272,122 @@ module.exports = {
       });
     } else {
       res.redirect("/logout");
+    }
+  },
+  canceltrip: (req, res) => {
+    var session = req.session;
+    const { ticketNum } = req.body;
+
+    if (session.user) {
+      try {
+        data = fs.readFileSync("./files/booked.txt", {
+          encoding: "utf8",
+          flag: "r",
+        });
+      } catch (error) {
+        fs.writeFileSync("./files/booked.txt", JSON.stringify([]));
+        data = JSON.stringify([]);
+        console.log(error);
+      }
+      data = JSON.parse(data);
+      for (let i = 0; i < data.length; i++) {
+        if (
+          data[i].user === session.user &&
+          data[i].cancelation === 0 &&
+          data[i].ticketnum == ticketNum
+        ) {
+          data[i].cancelation = 1;
+          fs.writeFileSync("./files/booked.txt", JSON.stringify(data));
+          console.log(ticketNum);
+        }
+      }
+      res.redirect("/userhistory");
+    }
+  },
+  paySaved: (req, res) => {
+    var session = req.session;
+    const { ticketNum } = req.body;
+
+    if (session.user) {
+      try {
+        data = fs.readFileSync("./files/booked.txt", {
+          encoding: "utf8",
+          flag: "r",
+        });
+      } catch (error) {
+        fs.writeFileSync("./files/booked.txt", JSON.stringify([]));
+        data = JSON.stringify([]);
+        console.log(error);
+      }
+      try {
+        sData = fs.readFileSync("./files/bookingSaved.txt", {
+          encoding: "utf8",
+          flag: "r",
+        });
+      } catch (error) {
+        fs.writeFileSync("./files/bookingSaved.txt", JSON.stringify([]));
+        sData = JSON.stringify([]);
+        console.log(error);
+      }
+      data = JSON.parse(data);
+      sData = JSON.parse(sData);
+      for (let i = 0; i < sData.length; i++) {
+        if (
+          sData[i].user === session.user &&
+          sData[i].delete === 0 &&
+          sData[i].ticketnum == ticketNum
+        ) {
+          // data[i].cancelation = 1;
+          // fs.writeFileSync("./files/booked.txt", JSON.stringify(data));
+          data.push({
+            ticketnum: sData[i].ticketnum,
+            user: sData[i].user,
+            numOfSeats: sData[i].numOfSeats,
+            name: sData[i].name,
+            flightName: sData[i].flightName,
+            flightCode: sData[i].flightCode,
+            arrTime: sData[i].arrTime,
+            deptTime: sData[i].deptTime,
+            paymentSts: "Paid",
+            cancelation: 0,
+          });
+          sData.splice(i, 1);
+          fs.writeFileSync("./files/booked.txt", JSON.stringify(data));
+          fs.writeFileSync("./files/bookingSaved.txt", JSON.stringify(sData));
+          console.log(ticketNum);
+        }
+      }
+      res.redirect("/usrbooking");
+    }
+  },
+  rmSaved: (req, res) => {
+    var session = req.session;
+    const { ticketNum } = req.body;
+
+    if (session.user) {
+      try {
+        data = fs.readFileSync("./files/bookingSaved.txt", {
+          encoding: "utf8",
+          flag: "r",
+        });
+      } catch (error) {
+        fs.writeFileSync("./files/bookingSaved.txt", JSON.stringify([]));
+        data = JSON.stringify([]);
+        console.log(error);
+      }
+      data = JSON.parse(data);
+      for (let i = 0; i < data.length; i++) {
+        if (
+          data[i].user === session.user &&
+          data[i].delete === 0 &&
+          data[i].ticketnum == ticketNum
+        ) {
+          data[i].delete = 1;
+          fs.writeFileSync("./files/bookingSaved.txt", JSON.stringify(data));
+          console.log(ticketNum);
+        }
+      }
+      res.redirect("/usrbooking");
     }
   },
 };

@@ -176,3 +176,10 @@ input[type="date"]:focus::-webkit-datetime-edit {
 .passenger-dets input {
   margin: 10px;
 }
+
+.tkt-num input {
+  display: inline;
+  background-color: transparent;
+  border: none;
+  width: min-content !important;
+}

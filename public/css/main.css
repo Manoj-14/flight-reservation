@@ -63,7 +63,8 @@ header .hero .headings {
   font-size: 1.3rem;
 }
 
-.correct-margin {
+.correct-margin,
+.con-hist {
   padding-left: 6rem;
 }
 
