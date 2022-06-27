@@ -173,3 +173,6 @@ input[type="date"]:focus::-webkit-datetime-edit {
 .flight-details {
   display: flex;
 }
+.passenger-dets input {
+  margin: 10px;
+}

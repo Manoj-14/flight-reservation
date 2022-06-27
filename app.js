@@ -38,6 +38,7 @@ const {
   flightBooked,
   paidConfirm,
   saveBooking,
+  userHistory,
 } = require("./routes/dashboard");
 
 app.get("/", (req, res, next) => {
@@ -84,6 +85,7 @@ app.all("/upt-pass", uptPass);
 app.all("/booked", flightBooked);
 app.all("/paid", paidConfirm);
 app.all("/saved", saveBooking);
+app.all("/userhistory", userHistory);
 
 app.listen(port, () => {
   console.log("Listening to port", port);

@@ -208,4 +208,39 @@ module.exports = {
       res.redirect("/logout");
     }
   },
+  userHistory: (req, res) => {
+    var session = req.session;
+    var history = [];
+    if (session.user) {
+      try {
+        data = fs.readFileSync("./files/booked.txt", {
+          encoding: "utf8",
+          flag: "r",
+        });
+      } catch (error) {
+        fs.writeFileSync("./files/booked.txt", JSON.stringify([]));
+        data = JSON.stringify([]);
+        console.log(error);
+      }
+      data = JSON.parse(data);
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].user === session.user) {
+          history.push(data[i]);
+        }
+      }
+      console.log(data);
+      console.log(history.length);
+      res.status(200).render("user/booking-history.ejs", {
+        title: "User History",
+        length: history.length,
+        history,
+        main: false,
+        adminDash: false,
+        userDash: true,
+        name: session.user,
+      });
+    } else {
+      res.redirect("/logout");
+    }
+  },
 };

@@ -1,12 +1,4 @@
 <%- include ('../partials/headers.ejs') %>
-    <script>
-
-        function getTime(time, className) {
-            var time = time.slice(11, 17);
-            const element = document.querySelector("." + className);
-            element.innerHTML = time;
-        }
-    </script>
 
     <body>
         <%- include ('../partials/dashboardNav.ejs') %>
@@ -106,18 +98,19 @@
                                         <div class="numpas">
                                             <div class="passenger-dets">
                                                 <h3>Passengers</h3>
+                                                <!-- Name <input type="text" readonly value="Manoj">
                                                 Name <input type="text" readonly value="Manoj">
-                                                Name <input type="text" readonly value="Manoj">
-                                                Name <input type="text" readonly value="Manoj">
+                                                Name <input type="text" readonly value="Manoj"> -->
                                             </div>
                                             <div class="payment">
                                                 <div>
                                                     <h3>Passengers</h3>
-                                                    Number of Passengers:<input type="number" value="3" readonly>
+                                                    Number of Passengers:<input id="nop" type="number" value="3"
+                                                        readonly>
                                                 </div>
                                                 <div>
                                                     <h3>Payment Details</h3>
-                                                    Total payment:<input type="number" value="3000" readonly>
+                                                    Total payment:<input type="number" id="pd" value="3000" readonly>
                                                 </div>
                                             </div>
                                         </div>

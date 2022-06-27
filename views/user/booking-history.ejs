@@ -1,0 +1,42 @@
+<%- include ('../partials/headers.ejs') %>
+
+    <body>
+        <%- include ('../partials/dashboardNav.ejs') %>
+            <h2>Confirmed Bookings</h2>
+            <div class="flights-details">
+                <% if (length> 0) { %>
+                    <% for( let index=0; index < length; index++ ) { %>
+                        <div class="flight">
+                            <div>
+                                <h2 class="flight-name"><span class="index">
+                                        <%= index+1 %>.
+                                    </span>
+                                    <%= history[index].flightName %>
+                                </h2>
+                                <div class="flight-info">
+                                    <span class="tkt-num">
+                                        <%= history[index].ticketnum %>
+                                    </span>
+                                    <span class="code">
+                                        <%= history[index].flightCode %>
+                                    </span>
+                                    <span class="dept-time">
+                                        <%= history[index].deptTime%>
+                                    </span>
+
+                                    <span class="arr-time">
+                                        <%= history[index].arrTime %>
+                                    </span>
+                                    <!-- <span class="dur-time">flights[index].Duration</span> -->
+                                </div>
+                            </div>
+                            <div class="booking-options">
+                                <input type="submit" id="busi-btn" value="Cancel">
+                            </div>
+                        </div>
+                        <% } %>
+
+                            <% } %>
+
+            </div>
+    </body>

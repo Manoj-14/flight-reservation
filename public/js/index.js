@@ -45,6 +45,7 @@ function createInps(parentCls, inpCls) {
     inp.setAttribute("placeholder", "none");
     inp.setAttribute("required", "");
     inp.setAttribute("name", `name`);
+    inp.classList.add("names");
     var span1 = document.createElement("span");
     span1.classList.add("highlight");
     var span2 = document.createElement("span");
@@ -64,7 +65,10 @@ function createInps(parentCls, inpCls) {
 
   var inp2 = document.createElement("input");
 
-  inp2.setAttribute("onclick", "swipeLeft('second-inps','third-inps');");
+  inp2.setAttribute(
+    "onclick",
+    "swipeLeft('second-inps','fourth-inps');confirmRes()"
+  );
   inp2.setAttribute("type", "button");
   inp2.setAttribute("value", "Next");
 
@@ -78,4 +82,21 @@ function getFlightDets(flightName, code, deptTime, arrTime) {
   document.getElementById("flightCode").value = code;
   document.getElementById("deptTime").value = deptTime;
   document.getElementById("arrTime").value = arrTime;
+}
+
+function confirmRes() {
+  var k = "name";
+  const names = document.querySelectorAll(".names");
+  const nop = document.getElementById("nop");
+  const ttlPayment = document.getElementById("pd");
+  const pass_dets = document.querySelector(".passenger-dets");
+  for (let i = 0; i < names.length; i++) {
+    window["name" + (i + 1)] = document.createElement("input");
+    window["name" + (i + 1)].setAttribute("type", "text");
+    window["name" + (i + 1)].value = names[i].value;
+    window["name" + (i + 1)].setAttribute("readonly", true);
+    pass_dets.appendChild(window["name" + (i + 1)]);
+  }
+  nop.value = names.length;
+  ttlPayment.value = 1999 * names.length;
 }
