@@ -76,10 +76,11 @@ function createInps(parentCls, inpCls) {
   document.querySelector(`.${parentCls}`).appendChild(inpParent1);
 }
 
-function getFlightDets(flightName, code, deptTime, arrTime) {
+function getFlightDets(flightName, code, deptDate, deptTime, arrTime) {
   // console.log(flightName, code, arrTime, deptTime);
   document.getElementById("flightName").value = flightName;
   document.getElementById("flightCode").value = code;
+  document.getElementById("deptDate").value = deptDate;
   document.getElementById("deptTime").value = deptTime;
   document.getElementById("arrTime").value = arrTime;
 }
@@ -98,5 +99,16 @@ function confirmRes() {
     pass_dets.appendChild(window["name" + (i + 1)]);
   }
   nop.value = names.length;
-  ttlPayment.value = 1999 * names.length;
+  ttlPayment.value = parseFloat(1999.0 * names.length);
+  console.log(1999.0 * names.length);
 }
+function hidetext() {
+  const gettext = document.getElementById("alr-text");
+
+  console.log("Here");
+  setTimeout(function () {}, 2000);
+}
+hidetext();
+const gettext = document.getElementById("alr-text");
+gettext.style.display = "none !important";
+console.log(gettext);

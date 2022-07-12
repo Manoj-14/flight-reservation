@@ -161,17 +161,21 @@ input[type="date"]:focus::-webkit-datetime-edit {
   color: rgba(153, 153, 153, 0) !important;
 }
 
-.flight-details > input {
+.flight-details > span input {
   padding: 0;
   margin: 0;
   background: transparent;
   border: none;
   display: inline !important;
-  width: 150px !important;
+  width: min-content !important;
+  color: var(--primary-color);
 }
 
 .flight-details {
   display: flex;
+  flex-direction: column;
+  position: relative;
+  left: 10%;
 }
 .passenger-dets input {
   margin: 10px;
@@ -182,4 +186,24 @@ input[type="date"]:focus::-webkit-datetime-edit {
   background-color: transparent;
   border: none;
   width: min-content !important;
+}
+#sub-ttl {
+  margin: 1rem 2rem;
+  font-size: 2rem;
+  text-align: center;
+}
+#alert {
+  background-color: var(--alert-color) !important;
+}
+.change-pass-btn > input {
+  width: min-content !important;
+  height: min-content !important;
+  background-color: transparent !important;
+  color: var(--primary-color);
+  box-shadow: none;
+  border: none;
+  transform: none !important;
+}
+.change-pass-btn {
+  margin: 0;
 }

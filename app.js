@@ -89,7 +89,7 @@ app.all("/upt-pass", uptPass);
 app.all("/booked", flightBooked);
 app.all("/paid", paidConfirm);
 app.all("/saved", saveBooking);
-app.all("/userhistory", userHistory);
+app.all("/userpaid", userHistory);
 app.all("/cancel", canceltrip);
 app.all("/usrbooking", savedHistory);
 app.all("/paySaved", paySaved);

@@ -2,12 +2,9 @@
 
     <body>
         <%- include ('../partials/dashboardNav.ejs') %>
-            <main>
+            <main class="prof">
                 <section class="usr-prof-main">
                     <div>
-                        <div class="prof-pic">
-                            <img id="prof-pic" src="account.png" alt="profile-pic">
-                        </div>
                         <div class="prof-det">
                             <h3>Name : <span>
                                     <%= name %>
@@ -18,13 +15,18 @@
                             <h3>Phone : <span>
                                     <%= phone %>
                                 </span></h3>
-                            <div class="group">
+                            <div class="group change-pass-btn">
                                 <input type="button" onclick="popupDisplay('updt-sec')" value="Change Password"
                                     required>
                             </div>
                         </div>
                     </div>
+
                 </section>
+                <section class="history">
+                    <h2>History</h2>
+                </section>
+
                 <section class="updt-sec">
                     <div>
                         <span><i onclick="popupClose('updt-sec')" class='bx bx-x'></i></span>

@@ -32,16 +32,26 @@ header .hero #video-overlay {
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: #000000;
+  background-color: transparent;
   opacity: 0.4;
 }
-
+header .hero .headings > * {
+  margin-top: 1rem;
+}
 header .hero .headings {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 5rem;
 }
-
+header .hero .headings #title {
+  color: var(--primary-color);
+  /* margin: 10px 0; */
+}
+header .hero .headings a {
+  background-color: var(--primary-color);
+  color: var(--primary-color-light);
+  padding: 5px 10px;
+}
 /* dashboard  */
 .booking-form-header {
   height: 100vh;
@@ -69,15 +79,20 @@ header .hero .headings {
 }
 
 /* User Profile */
-
+.prof {
+  position: relative;
+  margin-left: 8rem;
+  margin-top: 1rem;
+}
 .usr-prof-main {
-  width: 100%;
-  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 2rem;
 }
-
 .usr-prof-main > div {
   background-color: var(--primary-color-light);
   padding: 20px;
@@ -192,4 +207,32 @@ header .hero .headings {
 .confirm-btns input {
   width: 200px !important;
   padding: 5px 10px;
+}
+#flight-filter {
+  margin: 1rem 2rem;
+}
+#flight-filter > * {
+  display: inline;
+  margin: 0 2rem;
+}
+.booking-options > input[type="button"],
+.booking-options > input[type="submit"] {
+  width: min-content;
+  padding: 5px 10px;
+}
+.booking-options > input[type="submit"] {
+  width: 100px;
+}
+#emt {
+  color: var(--alert-color);
+  font-size: 1.4rem;
+  text-align: center;
+}
+.success {
+  color: var(--success-color);
+  font-weight: 700;
+}
+.failure {
+  color: var(--alert-color);
+  font-weight: 700;
 }

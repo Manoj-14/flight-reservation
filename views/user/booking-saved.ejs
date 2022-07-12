@@ -3,7 +3,7 @@
     <body>
         <%- include ('../partials/dashboardNav.ejs') %>
             <div class="con-hist">
-                <h2>Saved Bookings</h2>
+                <h2 id="sub-ttl">Saved Bookings</h2>
                 <div class="flights-details">
                     <% if (length> 0) { %>
                         <% for( let index=0; index < length; index++ ) { %>
@@ -24,6 +24,9 @@
                                             <span class="code">
                                                 <%= history[index].flightCode %>
                                             </span>
+                                            <span class="code">
+                                                <%= history[index].deptDate %>
+                                            </span>
                                             <span class="dept-time">
                                                 <%= history[index].deptTime%>
                                             </span>
@@ -35,15 +38,16 @@
                                         </div>
                                     </div>
                                     <div class="booking-options">
-                                        <input type="submit" formaction="/paySaved" id="busi-btn" value="Pay">
-                                        <input type="submit" formaction="/rmSaved" id="busi-btn" value="Remove">
+                                        <input type="submit" formaction="/paySaved" value="Pay">
+                                        <input type="submit" formaction="/rmSaved" id="alert" value="Remove">
                                     </div>
                                 </div>
                             </form>
                             <% } %>
 
-                                <% } %>
-
+                                <% } else {%>
+                                    <p id="emt">Empty</p>
+                                    <% } %>
                 </div>
             </div>
     </body>

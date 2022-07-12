@@ -6,6 +6,8 @@
   --toggle-color: #ddd;
   --text-color: #707070;
   --popup-color: #70707095;
+  --alert-color: #d0342c;
+  --success-color: #4bb543;
 
   /* ====== Transition ====== */
   --tran-03: all 0.2s ease;

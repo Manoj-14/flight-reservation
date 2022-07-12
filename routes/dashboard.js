@@ -3,6 +3,7 @@ const path = require("path");
 const getDataFromFile = require("../getDataFromFile");
 const bcrypt = require("bcryptjs");
 var salt = bcrypt.genSaltSync(10);
+
 function create_UUID() {
   var dt = new Date().getTime();
   var uuid = "xxx-xxy-xyx-yxx".replace(/[xy]/g, function (c) {
@@ -12,6 +13,32 @@ function create_UUID() {
   });
   return uuid;
 }
+
+function create_saved_UUID() {
+  var dt = new Date().getTime();
+  var uuid = "xxx-xyx-yxx".replace(/[xy]/g, function (c) {
+    var r = (dt + Math.random() * 16) % 16 | 0;
+    dt = Math.floor(dt / 16);
+    return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
+  });
+  return uuid;
+}
+
+// function checkValidity(date) {
+//   const today = new Date();
+//   console.log(today.getTime());
+//   console.log(date.getTime());
+//   if (today.toDateString() === date.toDateString()) {
+//     if (parseInt(today.getTime()) > parseInt(date.getTime())) return true;
+//   } else if (today.toDateString() < date.toDateString()) {
+//     return "future";
+//   } else {
+//     return "past";
+//   }
+
+//   return false;
+// }
+// console.log(checkValidity(new Date("2022-06-28T20:50:42.000Z")));
 const defaultList = [
   {
     id: "admin",
@@ -43,7 +70,7 @@ module.exports = {
     console.log(req.session);
     if (session.user) {
       // res.json(session.user);
-      res.render("adminDashboard.ejs", {
+      res.render("admin/adminDashboard.ejs", {
         title: "Admin Dashboard",
         main: false,
         adminDash: true,
@@ -57,11 +84,20 @@ module.exports = {
   userproj: (req, res) => {
     var session = req.session;
     const id = session.user;
+    const histArr = [];
     if (session.user) {
       let data = getDataFromFile("./files/userInfo.txt", defaultList);
+      let histData = getDataFromFile("./files/booked.txt", defaultList);
+
       data = JSON.parse(data);
+      histData = JSON.parse(histData);
+
       for (let i = 0; i < data.length; i++) {
         if (data[i].id === id) {
+          for (let j = 0; j < histData.length; j++) {
+            histArr.push(histData[j]);
+          }
+          console.log(histArr);
           res.status(200).render("user/userprofile.ejs", {
             title: "User Profile",
             main: false,
@@ -100,15 +136,6 @@ module.exports = {
             res.status(200).redirect("/userprofile");
             return;
           }
-          // res.status(200).render("user/updatePassword.ejs", {
-          //   title: "Update Password",
-          //   main: false,
-          //   adminDash: false,
-          //   userDash: true,
-          //   user: session.user,
-          //   name: data[i].name,
-          //   phone: data[i].phone,
-          // });
         }
       }
       res.status(404).send("User not found");
@@ -126,9 +153,17 @@ module.exports = {
     // const numOfSeates = req.body.numOfSeates;
 
     if (session.user) {
-      const { numOfSeats, name, flightName, flightCode, arrTime, deptTime } =
-        req.body;
+      const {
+        numOfSeats,
+        name,
+        flightName,
+        flightCode,
+        deptDate,
+        arrTime,
+        deptTime,
+      } = req.body;
       var ticketnum;
+      console.log(req.body);
 
       try {
         data = fs.readFileSync("./files/booked.txt", {
@@ -150,13 +185,14 @@ module.exports = {
           name,
           flightName,
           flightCode,
+          deptDate,
           arrTime,
           deptTime,
           paymentSts: "Paid",
           cancelation: 0,
         });
         fs.writeFileSync("./files/booked.txt", JSON.stringify(data));
-        res.redirect("/userhistory");
+        res.redirect("/userpaid");
       } catch (error) {
         console.log(error);
       }
@@ -170,8 +206,15 @@ module.exports = {
     // const numOfSeates = req.body.numOfSeates;
 
     if (session.user) {
-      const { numOfSeats, name, flightName, flightCode, arrTime, deptTime } =
-        req.body;
+      const {
+        numOfSeats,
+        name,
+        flightName,
+        flightCode,
+        deptDate,
+        arrTime,
+        deptTime,
+      } = req.body;
       var ticketnum;
 
       try {
@@ -188,12 +231,13 @@ module.exports = {
 
       try {
         data.push({
-          ticketnum: create_UUID(),
+          ticketnum: create_saved_UUID(),
           user: session.user,
           numOfSeats,
           name,
           flightName,
           flightCode,
+          deptDate,
           arrTime,
           deptTime,
           paymentSts: "Saved",
@@ -301,7 +345,7 @@ module.exports = {
           console.log(ticketNum);
         }
       }
-      res.redirect("/userhistory");
+      res.redirect("/userpaid");
     }
   },
   paySaved: (req, res) => {
@@ -340,7 +384,7 @@ module.exports = {
           // data[i].cancelation = 1;
           // fs.writeFileSync("./files/booked.txt", JSON.stringify(data));
           data.push({
-            ticketnum: sData[i].ticketnum,
+            ticketnum: create_UUID(),
             user: sData[i].user,
             numOfSeats: sData[i].numOfSeats,
             name: sData[i].name,
