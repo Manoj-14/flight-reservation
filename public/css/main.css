@@ -54,6 +54,10 @@ header .hero .headings a {
 }
 /* dashboard  */
 .booking-form-header {
+  background-image: url("../plane.png") !important;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
   height: 100vh;
 }
 .booking-form-header > div:last-child {
@@ -65,7 +69,11 @@ header .hero .headings a {
   align-items: center;
   height: 100%;
 }
-
+.form-1div {
+  background-color: var(--bg-white-color);
+  padding: 4rem;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
 #greeting {
   left: 10rem;
   top: 3rem;
@@ -241,13 +249,23 @@ header .hero .headings a {
   color: var(--alert-color);
   font-weight: 700;
 }
-.dur-time p {
+.dur-time .dot {
   width: 10px !important;
   height: 10px !important;
   display: inline-block;
-  background-color: var(--alert-color);
+
   border-radius: 50%;
 }
 .dur-time {
   color: var(--alert-color) !important;
+}
+#cnl,
+#prv {
+  background-color: var(--alert-color);
+}
+#cur {
+  background-color: var(--primary-color);
+}
+#nxt {
+  background-color: var(--success-color);
 }

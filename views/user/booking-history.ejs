@@ -33,11 +33,28 @@
                                             <span class="arr-time">
                                                 <%= history[index].arrTime %>
                                             </span>
-                                            <!-- <span class="dur-time">flights[index].Duration</span> -->
+                                            <span class="dur-time">
+
+                                                <% switch (history[index].expSts) { case 0 : %>
+                                                    <p class="dot" id="cur"></p>
+                                                    <span>Today</span>
+                                                    <% break; case 1 : %>
+                                                        <p class="dot" id="prv"></p>
+                                                        <span>Done</span>
+                                                        <% break; case 2 : %>
+                                                            <p class="dot" id="nxt"></p>
+                                                            <span>Upcoming</span>
+                                                            <% break; } %>
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="booking-options">
-                                        <input type="submit" id="alert" value="Cancel">
+                                        <% if (history[index].expSts==0 || history[index].expSts==1) { %>
+
+                                            <input type="submit" id="alert" disabled class="disabled" value="Cancel">
+                                            <% } else {%>
+                                                <input type="submit" id="alert" value="Cancel">
+                                                <% } %>
                                     </div>
                                 </div>
                             </form>

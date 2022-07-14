@@ -207,3 +207,6 @@ input[type="date"]:focus::-webkit-datetime-edit {
 .change-pass-btn {
   margin: 0;
 }
+.disabled {
+  opacity: 0.3 !important;
+}

@@ -24,21 +24,19 @@ function create_saved_UUID() {
   return uuid;
 }
 
-// function checkValidity(date) {
-//   const today = new Date();
-//   console.log(today.getTime());
-//   console.log(date.getTime());
-//   if (today.toDateString() === date.toDateString()) {
-//     if (parseInt(today.getTime()) > parseInt(date.getTime())) return true;
-//   } else if (today.toDateString() < date.toDateString()) {
-//     return "future";
-//   } else {
-//     return "past";
-//   }
+function checkValidity(date) {
+  const today = new Date();
+  if (today.toDateString() === date.toDateString()) {
+    return 0;
+  } else if (today < date) {
+    return 2;
+  } else {
+    return 1;
+  }
 
-//   return false;
-// }
-// console.log(checkValidity(new Date("2022-06-28T20:50:42.000Z")));
+  return false;
+}
+console.log(checkValidity(new Date("2022-01-10")));
 const defaultList = [
   {
     id: "admin",
@@ -59,7 +57,7 @@ module.exports = {
         main: false,
         adminDash: false,
         userDash: true,
-        name: session.user,
+        name: session.name,
       });
     } else {
       res.redirect("/login");
@@ -75,7 +73,7 @@ module.exports = {
         main: false,
         adminDash: true,
         userDash: false,
-        name: session.user,
+        name: session.name,
       });
     } else {
       res.redirect("/login");
@@ -304,9 +302,12 @@ module.exports = {
       data = JSON.parse(data);
       for (let i = 0; i < data.length; i++) {
         if (data[i].user === session.user && data[i].cancelation === 0) {
+          data[i].expSts = checkValidity(new Date(data[i].deptDate));
           history.push(data[i]);
+          console.log(data[i].deptDate);
         }
       }
+      console.log(history);
       res.status(200).render("user/booking-history.ejs", {
         title: "User History",
         length: history.length,
@@ -383,8 +384,6 @@ module.exports = {
           sData[i].delete === 0 &&
           sData[i].ticketnum == ticketNum
         ) {
-          // data[i].cancelation = 1;
-          // fs.writeFileSync("./files/booked.txt", JSON.stringify(data));
           data.push({
             ticketnum: create_UUID(),
             user: sData[i].user,

@@ -8,6 +8,7 @@
   --popup-color: #70707095;
   --alert-color: #d0342c;
   --success-color: #4bb543;
+  --bg-white-color: rgba(255, 255, 255, 0.723);
 
   /* ====== Transition ====== */
   --tran-03: all 0.2s ease;

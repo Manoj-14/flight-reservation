@@ -45,7 +45,15 @@ module.exports = {
     let i;
     for (i = 0; i < data.length; i++) {
       if (data[i].id === id) {
-        res.send("Already registerd ");
+        res.render("login.ejs", {
+          title: "Login",
+          main: true,
+          adminDash: false,
+          userDash: false,
+          msg: true,
+          status: "success",
+          message: "You already have an account Please Login",
+        });
         return;
       }
     }
@@ -87,6 +95,7 @@ module.exports = {
           let matchPass = await bcrypt.compareSync(password, data[i].password);
           if (matchPass) {
             if (data[i].accessCode === 0) {
+              session.name = data[i].name;
               res.status(200).redirect("/userdashboard");
             } else {
               res.status(200).redirect("/admindashboard");
