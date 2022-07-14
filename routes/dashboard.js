@@ -106,6 +106,8 @@ module.exports = {
             user: session.user,
             name: data[i].name,
             phone: data[i].phone,
+            histArr: histArr,
+            length: histArr.length,
           });
           return;
         }

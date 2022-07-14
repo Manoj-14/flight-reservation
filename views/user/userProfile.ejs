@@ -3,29 +3,78 @@
     <body>
         <%- include ('../partials/dashboardNav.ejs') %>
             <main class="prof">
-                <section class="usr-prof-main">
-                    <div>
-                        <div class="prof-det">
-                            <h3>Name : <span>
-                                    <%= name %>
-                                </span></h3>
-                            <h3>Email : <span>
-                                    <%= user %>
-                                </span></h3>
-                            <h3>Phone : <span>
-                                    <%= phone %>
-                                </span></h3>
-                            <div class="group change-pass-btn">
-                                <input type="button" onclick="popupDisplay('updt-sec')" value="Change Password"
-                                    required>
-                            </div>
-                        </div>
-                    </div>
-
-                </section>
                 <section class="history">
                     <h2>History</h2>
                 </section>
+                <section class="histGroup">
+                    <div>
+                        <div>
+                            <% if (length> 0) { %>
+                                <% for( let index=0; index < length; index++ ) { %>
+                                    <form action="/cancel" method="post">
+                                        <div class="flight">
+                                            <div>
+                                                <h2 class="flight-name"><span class="index">
+                                                        <%= index+1 %>.
+                                                    </span>
+                                                    <%= histArr[index].flightName %>
+                                                </h2>
+                                                <div class="flight-info">
+                                                    <span class="tkt-num">
+                                                        <input name="ticketNum" readonly
+                                                            value="<%= histArr[index].ticketnum %>">
+
+                                                    </span>
+                                                    <span class="code">
+                                                        <%= histArr[index].flightCode %>
+                                                    </span>
+                                                    <span class="code">
+                                                        <%= histArr[index].deptDate %>
+                                                    </span>
+                                                    <span class="dept-time">
+                                                        <%= histArr[index].deptTime%>
+                                                    </span>
+
+                                                    <span class="arr-time">
+                                                        <%= histArr[index].arrTime %>
+                                                    </span>
+                                                    <!-- <span class="dur-time">flights[index].Duration</span> -->
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                    <% } %>
+
+
+                                        <% } else {%>
+                                            <p id="emt">Empty</p>
+                                            <% } %>
+                        </div>
+                    </div>
+                    <section class="usr-prof-main">
+
+                        <div>
+                            <div class="prof-det">
+                                <h3>Name : <span>
+                                        <%= name %>
+                                    </span></h3>
+                                <h3>Email : <span>
+                                        <%= user %>
+                                    </span></h3>
+                                <h3>Phone : <span>
+                                        <%= phone %>
+                                    </span></h3>
+                                <div class="group change-pass-btn">
+                                    <input type="button" onclick="popupDisplay('updt-sec')" value="Change Password"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+                </section>
+
 
                 <section class="updt-sec">
                     <div>

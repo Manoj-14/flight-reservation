@@ -84,14 +84,18 @@ header .hero .headings a {
   margin-left: 8rem;
   margin-top: 1rem;
 }
+.histGroup {
+  display: flex;
+  margin-top: 1rem;
+}
 .usr-prof-main {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   margin: 2rem;
+  margin-top: 5rem;
+  margin-right: 5rem;
 }
 .usr-prof-main > div {
   background-color: var(--primary-color-light);
@@ -101,6 +105,7 @@ header .hero .headings a {
   justify-content: center;
   flex-direction: column;
   border-radius: 10px;
+
   box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.1);
 }
 .prof-pic {
