@@ -38,7 +38,12 @@
                                                     <span class="arr-time">
                                                         <%= histArr[index].arrTime %>
                                                     </span>
-                                                    <!-- <span class="dur-time">flights[index].Duration</span> -->
+                                                    <span class="dur-time">
+                                                        <% if (histArr[index].cancelation==1) { %>
+                                                            <p id="dot"></p>
+                                                            Cancelled
+                                                            <% } %>
+                                                    </span>
                                                 </div>
                                             </div>
 

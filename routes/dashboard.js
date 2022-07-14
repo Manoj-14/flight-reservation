@@ -218,7 +218,7 @@ module.exports = {
         deptTime,
       } = req.body;
       var ticketnum;
-
+      console.log(req.body);
       try {
         data = fs.readFileSync("./files/bookingSaved.txt", {
           encoding: "utf8",

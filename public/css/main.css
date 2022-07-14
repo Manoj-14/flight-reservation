@@ -241,3 +241,13 @@ header .hero .headings a {
   color: var(--alert-color);
   font-weight: 700;
 }
+.dur-time p {
+  width: 10px !important;
+  height: 10px !important;
+  display: inline-block;
+  background-color: var(--alert-color);
+  border-radius: 50%;
+}
+.dur-time {
+  color: var(--alert-color) !important;
+}
