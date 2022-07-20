@@ -79,6 +79,7 @@ module.exports = {
   userproj: (req, res) => {
     var session = req.session;
     const id = session.user;
+    console.log(id);
     const histArr = [];
     if (session.user) {
       let data = getDataFromFile("./files/userInfo.txt", defaultList);
@@ -90,9 +91,10 @@ module.exports = {
       for (let i = 0; i < data.length; i++) {
         if (data[i].id === id) {
           for (let j = 0; j < histData.length; j++) {
-            histArr.push(histData[j]);
+            if (histData[j].user === id) {
+              histArr.push(histData[j]);
+            }
           }
-          console.log(histArr);
           res.status(200).render("user/userprofile.ejs", {
             title: "User Profile",
             main: false,
