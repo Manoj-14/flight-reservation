@@ -33,17 +33,21 @@ header .hero #video-overlay {
   width: 100%;
   height: 100vh;
   background-color: transparent;
-  opacity: 0.4;
+  /* opacity: 0.4; */
 }
 header .hero .headings > * {
   margin-top: 1rem;
 }
 header .hero .headings {
   position: absolute;
-  top: 40%;
+  top: 35%;
   left: 5rem;
+  background-color: var(--bg-white-color);
+  padding: 2rem;
 }
 header .hero .headings #title {
+  margin-bottom: 2rem;
+  font-size: 3rem;
   color: var(--primary-color);
   /* margin: 10px 0; */
 }
@@ -266,6 +270,15 @@ header .hero .headings a {
 #cur {
   background-color: var(--primary-color);
 }
+#cur ~ span {
+  color: var(--primary-color) !important;
+}
 #nxt {
   background-color: var(--success-color);
+}
+#nxt ~ span {
+  color: var(--success-color) !important;
+}
+#prv ~ span {
+  color: var(--alert-color) !important;
 }

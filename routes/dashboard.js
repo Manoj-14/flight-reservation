@@ -33,10 +33,7 @@ function checkValidity(date) {
   } else {
     return 1;
   }
-
-  return false;
 }
-console.log(checkValidity(new Date("2022-01-10")));
 const defaultList = [
   {
     id: "admin",
@@ -353,6 +350,7 @@ module.exports = {
   },
   paySaved: (req, res) => {
     var session = req.session;
+    console.log(req.body.deptDate);
     const { ticketNum } = req.body;
 
     if (session.user) {
@@ -393,6 +391,7 @@ module.exports = {
             flightCode: sData[i].flightCode,
             arrTime: sData[i].arrTime,
             deptTime: sData[i].deptTime,
+            deptDate: sData[i].deptDate,
             paymentSts: "Paid",
             cancelation: 0,
           });

@@ -6,6 +6,7 @@
                 <% function getDate (stringTime){ var date=stringTime.slice(0, 10); return date; } %>
                     <main class="correct-margin">
                         <div class="container">
+                            <h2 id="sub-ttl">Book Tickets</h2>
                             <div id="flight-filter">
                                 <h2>From : <span>
                                         <%= from %>
@@ -49,10 +50,8 @@
                                             <div class="booking-options">
                                                 <input type="button"
                                                     onclick="popupDisplay('updt-sec');getFlightDets('<%= flightNameArr[index] %>', '<%= flights[index].flightNumber %>','<%= getDate(flights[index].arrivalTime) %>', '<%= getTime(flights[index].departureTime) %>', '<%= getTime(flights[index].arrivalTime) %>')"
-                                                    id="eco-btn" value="Economy : 1999.00/-" required>
-                                                <input type="button"
-                                                    onclick="popupDisplay('updt-sec');getFlightDets('<%= flightNameArr[index] %>', '<%= flights[index].flightNumber %>', '<%= getTime(flights[index].departureTime) %>', '<%= getTime(flights[index].arrivalTime) %>')"
-                                                    id="busi-btn" value="Business : 2999.00/-" required>
+                                                    id="eco-btn" value="Book : 1999.00/-" required>
+
                                             </div>
                                         </div>
                                         <% } %>

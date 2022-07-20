@@ -7,10 +7,6 @@ var request = require("request");
 var salt = bcrypt.genSaltSync(10);
 const https = require("https");
 var session;
-addToArray = (intoArr, addElem) => {
-  intoArr.push(addElem);
-  return intoArr;
-};
 const defaultList = [
   {
     id: "admin",
