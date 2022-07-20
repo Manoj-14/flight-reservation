@@ -175,6 +175,14 @@ module.exports = {
         console.log(error);
       }
       data = JSON.parse(data);
+      let fdata = getDataFromFile("./files/flight-seats.txt", []);
+      fdata = JSON.parse(fdata);
+      for (let i = 0; i < fdata.length; i++) {
+        if (fdata[i].flightCode === flightCode) {
+          fdata[i].maxSeats -= numOfSeats;
+          fs.writeFileSync("./files/flight-seats.txt", JSON.stringify(fdata));
+        }
+      }
 
       try {
         data.push({
@@ -378,12 +386,29 @@ module.exports = {
       }
       data = JSON.parse(data);
       sData = JSON.parse(sData);
+      let fdata = getDataFromFile("./files/flight-seats.txt", []);
+      fdata = JSON.parse(fdata);
+      // for (let i = 0; i < fdata.length; i++) {
+      //   if (fdata[i].flightCode === flightCode) {
+      //     fdata[i].maxSeats -= numOfSeats;
+      //     fs.writeFileSync("./files/flight-seats.txt", JSON.stringify(fdata));
+      //   }
+      // }
       for (let i = 0; i < sData.length; i++) {
         if (
           sData[i].user === session.user &&
           sData[i].delete === 0 &&
           sData[i].ticketnum == ticketNum
         ) {
+          for (let l = 0; l < fdata.length; l++) {
+            if (fdata[l].flightCode === sData[i].flightCode) {
+              fdata[l].maxSeats -= sData[i].numOfSeats;
+              fs.writeFileSync(
+                "./files/flight-seats.txt",
+                JSON.stringify(fdata)
+              );
+            }
+          }
           data.push({
             ticketnum: create_UUID(),
             user: sData[i].user,

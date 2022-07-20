@@ -43,14 +43,39 @@
                                                     <span class="arr-time">
                                                         Arrival:<%= getTime(flights[index].arrivalTime) %>
                                                     </span>
+                                                    <span class="arr-time">
+                                                        <% for( let m=0; m < avalSeats.length; m++ ) { %>
+                                                            <% if (avalSeats[m].fCode==flights[index].flightNumber) { %>
+                                                                Seats Available:<%= avalSeats[m].seats %>
+                                                                    <% } %>
+                                                                        <% } %>
+                                                    </span>
 
                                                     <!-- <span class="dur-time">flights[index].Duration</span> -->
                                                 </div>
                                             </div>
+
                                             <div class="booking-options">
-                                                <input type="button"
-                                                    onclick="popupDisplay('updt-sec');getFlightDets('<%= flightNameArr[index] %>', '<%= flights[index].flightNumber %>','<%= getDate(flights[index].arrivalTime) %>', '<%= getTime(flights[index].departureTime) %>', '<%= getTime(flights[index].arrivalTime) %>')"
-                                                    id="eco-btn" value="Book : 1999.00/-" required>
+                                                <% var test=false; %>
+                                                    <% for( let m=0; m < avalSeats.length; m++ ) { %>
+                                                        <% if (avalSeats[m].fCode==flights[index].flightNumber &&
+                                                            avalSeats[m].seats==0) { %>
+                                                            <% test=true; %>
+                                                                <% } %>
+                                                                    <% } %>
+                                                                        <% if (test==false ) { %>
+                                                                            <input type="button"
+                                                                                onclick="popupDisplay('updt-sec');getFlightDets('<%= flightNameArr[index] %>', '<%= flights[index].flightNumber %>','<%= getDate(flights[index].arrivalTime) %>', '<%= getTime(flights[index].departureTime) %>', '<%= getTime(flights[index].arrivalTime) %>')"
+                                                                                id="eco-btn" value="Book : 1999.00/-"
+                                                                                required>
+                                                                            <% } else {%>
+                                                                                <input type="button"
+                                                                                    onclick="popupDisplay('updt-sec');getFlightDets('<%= flightNameArr[index] %>', '<%= flights[index].flightNumber %>','<%= getDate(flights[index].arrivalTime) %>', '<%= getTime(flights[index].departureTime) %>', '<%= getTime(flights[index].arrivalTime) %>')"
+                                                                                    id="eco-btn"
+                                                                                    value="Book : 1999.00/-"
+                                                                                    class="disabled" disabled required>
+                                                                                <% } %>
+
 
                                             </div>
                                         </div>

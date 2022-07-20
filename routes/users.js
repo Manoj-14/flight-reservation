@@ -16,6 +16,25 @@ const defaultList = [
     accessCode: 1,
   },
 ];
+
+function getAvilSeats(mydate) {
+  var numSeats = [];
+  let fsdata = getDataFromFile("./files/flight-seats.txt", []);
+  fsdata = JSON.parse(fsdata);
+  for (let i = 0; i < fsdata.length; i++) {
+    var options = {};
+    if (fsdata[i].date == mydate) {
+      options.seats = fsdata[i].maxSeats;
+      options.fCode = fsdata[i].flightCode;
+      numSeats.push(options);
+    }
+  }
+
+  return numSeats;
+}
+
+console.log(getAvilSeats("2022/7/21"));
+
 module.exports = {
   userReg: async (req, res) => {
     const id = req.body.id;
@@ -133,6 +152,8 @@ module.exports = {
         const month = mydate.getMonth() + 1;
         const year = mydate.getFullYear();
         mydate = year + "/" + month + "/" + day;
+        console.log(mydate);
+        console.log(getAvilSeats(mydate));
         const felDetUrl = `https://api.flightstats.com/flex/schedules/rest/v1/json/from/${from}/to/${to}/arriving/${mydate}?appId=2b3f4415&appKey=b7b1c948b008fa981b0a4c7620c44b2f&Access-Control-Allow-Origin=*`;
         var FligOptions = {
           method: "GET",
@@ -144,6 +165,7 @@ module.exports = {
         };
         var flightName;
         var flightNameArr = [];
+
         request(FligOptions, function (error, response) {
           if (error) throw new Error(error);
           data = JSON.parse(response.body);
@@ -151,6 +173,26 @@ module.exports = {
           var flights = [];
           flights = data.scheduledFlights;
           for (var i = 0; i < data.scheduledFlights.length; i++) {
+            let fdata = getDataFromFile("./files/flight-seats.txt", []);
+            fdata = JSON.parse(fdata);
+            let flag = false;
+            for (let j = 0; j < fdata.length; j++) {
+              if (
+                fdata[j].date == mydate &&
+                fdata[j].flightCode == data.scheduledFlights[i].flightNumber
+              ) {
+                flag = true;
+              }
+            }
+            console.log(flag);
+            if (!flag) {
+              fdata.push({
+                flightCode: data.scheduledFlights[i].flightNumber,
+                date: mydate,
+                maxSeats: 50,
+              });
+            }
+            fs.writeFileSync("./files/flight-seats.txt", JSON.stringify(fdata));
             var options = {
               method: "GET",
               url: `https://api.flightstats.com/flex/airlines/rest/v1/json/fs/${data.scheduledFlights[i].carrierFsCode}`,
@@ -164,6 +206,7 @@ module.exports = {
               flightName = JSON.parse(flgResponse.body);
               flightNameArr.push(flightName.airline.name);
               if (flightNameArr.length === data.scheduledFlights.length) {
+                console.log(fdata.length);
                 res.status(200).render("user/booking.ejs", {
                   title: "Booking",
                   length: length,
@@ -174,6 +217,7 @@ module.exports = {
                   userDash: true,
                   name: session.user,
                   from,
+                  avalSeats: getAvilSeats(mydate),
                   to,
                   mydate: date,
                 });
