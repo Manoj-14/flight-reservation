@@ -6,6 +6,11 @@
                 <div id="greeting">
                     <h2>Hii <%= name %>
                     </h2>
+                    <% if (alrUsr) { %>
+                        <script>
+                            alert("Less number of seats are avilable");
+                        </script>
+                        <% } %>
                 </div>
                 <div>
                     <form action="/fetchFlights" class="booking-form" method="POST" autocomplete="off">

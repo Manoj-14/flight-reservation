@@ -55,6 +55,7 @@ module.exports = {
         adminDash: false,
         userDash: true,
         name: session.name,
+        alrUsr: false,
       });
     } else {
       res.redirect("/login");
@@ -179,6 +180,17 @@ module.exports = {
       fdata = JSON.parse(fdata);
       for (let i = 0; i < fdata.length; i++) {
         if (fdata[i].flightCode === flightCode) {
+          if (numOfSeats > fdata[i].maxSeats) {
+            res.render("user/userdashboard.ejs", {
+              title: "User Dashboard",
+              main: false,
+              adminDash: false,
+              userDash: true,
+              name: session.name,
+              alrUsr: true,
+            });
+            return;
+          }
           fdata[i].maxSeats -= numOfSeats;
           fs.writeFileSync("./files/flight-seats.txt", JSON.stringify(fdata));
         }
